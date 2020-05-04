@@ -5,14 +5,18 @@ from webbrowser import open
 class main:
     def __init__(self):
         self.user_id = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36'}
-        self.base_url = 'https://news.google.com/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGx1YlY4U0FuUnlHZ0pVVWlnQVAB?hl=tr&gl=TR&ceid=TR%3Atr'
+        self.base_urls = {'Türkiye':'https://news.google.com/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGx1YlY4U0FuUnlHZ0pVVWlnQVAB?hl=tr&gl=TR&ceid=TR%3Atr',
+                          'İngiltire':'https://news.google.com/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGx1YlY4U0FtVnVHZ0pIUWlnQVAB?hl=en-GB&gl=GB&ceid=GB%3Aen',
+                          'Amerika':'https://news.google.com/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGx1YlY4U0FtVnVHZ0pWVXlnQVAB?hl=en-US&gl=US&ceid=US%3Aen'}
         self.NewsTitle = []
         self.NewsContent = []
         self.NewsUrl = []
 
 
     def Scrap(self):
-        page = requests.get(self.base_url, headers= self.user_id)
+        print("[LOG]\tVar olan ülkeler: ", self.base_urls.keys())
+        country = input('Lütfen bir ülke giriniz').title()
+        page = requests.get(self.base_urls.get(country), headers= self.user_id)
         source = page.text
         soup = BeautifulSoup(source, 'html.parser')
 
