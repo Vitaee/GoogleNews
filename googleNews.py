@@ -15,10 +15,17 @@ class main:
 
     def Scrap(self):
         print("[LOG]\tVar olan ülkeler: ", self.base_urls.keys())
-        country = input('Lütfen bir ülke giriniz').title()
-        page = requests.get(self.base_urls.get(country), headers= self.user_id)
-        source = page.text
-        soup = BeautifulSoup(source, 'html.parser')
+        try:
+            country = input('Lütfen bir ülke giriniz: ').title()
+            page = requests.get(self.base_urls.get(country), headers= self.user_id)
+            source = page.text
+            soup = BeautifulSoup(source, 'html.parser')
+        except:
+            print("[LOG]\tYanlış / Var olmayan bir ülke adı girdiniz!")
+            country = input('Lütfen bir ülke giriniz: ').title()
+            page = requests.get(self.base_urls.get(country), headers=self.user_id)
+            source = page.text
+            soup = BeautifulSoup(source, 'html.parser')
 
         data2 = soup.find_all('h3', class_='ipQwMb ekueJc gEATFF RD0gLb')
         for item in data2:
